@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 32px; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 24px;
+                     border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .nav a { display: inline-block; padding: 8px 16px; margin-right: 8px;
+                 background: #2563eb; color: #fff; border-radius: 4px;
+                 text-decoration: none; }
+        .nav a:hover { background: #1e40af; }
+        .info { background: #f9fafb; padding: 12px; border-left: 4px solid #2563eb;
+                margin: 16px 0; }
+        .logout { color: #dc2626; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Панель управления</h1>
+    <div class="info">
+        <p>Пользователь: <b th:text="${username}"></b></p>
+        <p>Права:</p>
+        <ul>
+            <li th:each="a : ${authorities}" th:text="${a}"></li>
+        </ul>
+    </div>
+    <div class="nav">
+        <a th:href="@{/employees}" sec:authorize="hasAuthority('EMPLOYEE_VIEW')">Сотрудники</a>
+        <a th:href="@{/documents}" sec:authorize="hasAuthority('DOCUMENT_VIEW')">Документы</a>
+        <a th:href="@{/admin/roles}" sec:authorize="hasRole('ADMIN')">Роли и права</a>
+    </div>
+    <p style="margin-top:24px">
+        <a th:href="@{/logout}" class="logout">Выйти</a>
+    </p>
+</div>
+</body>
+</html>

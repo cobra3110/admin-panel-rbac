@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Роли и права</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 32px; }
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 24px;
+                     border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: top; }
+        th { background: #f9fafb; }
+        .tag { display: inline-block; background: #e0e7ff; color: #3730a3;
+               padding: 2px 8px; border-radius: 12px; font-size: 12px; margin: 2px; }
+        .btn { display: inline-block; padding: 6px 12px; border-radius: 4px;
+               text-decoration: none; color: #fff; font-size: 14px; }
+        .btn-edit { background: #2563eb; }
+        .btn-secondary { background: #6b7280; margin-bottom: 16px; display: inline-block; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Роли и права доступа</h1>
+    <a th:href="@{/dashboard}" class="btn btn-secondary">Назад</a>
+    <table>
+        <thead>
+        <tr><th>ID</th><th>Роль</th><th>Права</th><th>Действие</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${roles}">
+            <td th:text="${r.id}"></td>
+            <td th:text="${r.name}"></td>
+            <td>
+                <span class="tag" th:each="p : ${r.permissions}" th:text="${p.code}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/admin/roles/' + ${r.id} + '/permissions'}"
+                   class="btn btn-edit">Настроить права</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

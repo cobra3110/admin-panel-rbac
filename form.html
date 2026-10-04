@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Документ</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 32px; }
+        .container { max-width: 500px; margin: 0 auto; background: #fff; padding: 24px;
+                     border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        input { width: 100%; padding: 8px; box-sizing: border-box;
+                border: 1px solid #ccc; border-radius: 4px; margin-top: 4px; }
+        button { margin-top: 16px; padding: 10px 20px; background: #2563eb;
+                 color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${document.id} == null ? 'Новый документ' : 'Редактировать'"></h1>
+    <form th:action="${document.id} == null ? @{/documents} : @{'/documents/' + ${document.id}}"
+          th:object="${document}" method="post">
+        <label>Название</label>
+        <input type="text" th:field="*{title}" required/>
+
+        <label>Категория</label>
+        <input type="text" th:field="*{category}"/>
+
+        <label>Ссылка на файл</label>
+        <input type="text" th:field="*{fileUrl}" required/>
+
+        <button type="submit">Сохранить</button>
+        <a th:href="@{/documents}" style="margin-left:12px">Отмена</a>
+    </form>
+</div>
+</body>
+</html>

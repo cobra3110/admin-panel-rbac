@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройка прав</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 32px; }
+        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 24px;
+                     border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .perm { display: block; padding: 10px; border-bottom: 1px solid #e5e7eb; }
+        .perm input { margin-right: 8px; }
+        button { margin-top: 16px; padding: 10px 20px; background: #2563eb;
+                 color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        .code { color: #6b7280; font-size: 12px; margin-left: 8px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Права для роли: <span th:text="${role.name}"></span></h1>
+    <form th:action="@{'/admin/roles/' + ${role.id} + '/permissions'}" method="post">
+        <label class="perm" th:each="p : ${allPermissions}">
+            <input type="checkbox" name="permissionIds" th:value="${p.id}"
+                   th:checked="${role.permissions.contains(p)}"/>
+            <span th:text="${p.description}"></span>
+            <span class="code" th:text="${p.code}"></span>
+        </label>
+        <button type="submit">Сохранить</button>
+        <a th:href="@{/admin/roles}" style="margin-left:12px">Отмена</a>
+    </form>
+</div>
+</body>
+</html>
